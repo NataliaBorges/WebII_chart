@@ -112,3 +112,21 @@ tbody tr td:last-child {
 }
 
 
+.dataTables_wrapper .dataTables_paginate .active {
+    border-radius: 50%;
+    color: #593bdb !important;
+    background: rgba(89, 59, 219, 0.1);
+    border: 0 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .previous, .next {
+    border: 0;
+}
+
+#buttonsDiv {
+    padding: 20px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    margin-bottom: 20px;
+}

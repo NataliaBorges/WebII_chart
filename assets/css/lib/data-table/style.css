@@ -1590,7 +1590,6 @@ pre {
   .table-responsive-xxl {
     display: block;
     width: 100%;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
     .table-responsive-xxl > .table-bordered {
       border: 0; } }
@@ -1598,7 +1597,6 @@ pre {
 .table-responsive {
   display: block;
   width: 100%;
-  overflow-x: auto;
   -webkit-overflow-scrolling: touch; }
   .table-responsive > .table-bordered {
     border: 0; }

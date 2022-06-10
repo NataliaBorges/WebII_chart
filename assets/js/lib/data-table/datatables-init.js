@@ -22,7 +22,8 @@
         ]
     });
 	
-	$('#row-select').DataTable( {
+	const tableSelect = $('#row-select').DataTable( {
+			buttons: true,
 			initComplete: function () {
 				this.api().columns().every( function () {
 					var column = this;
@@ -45,7 +46,9 @@
 			}
 		} );
 
-
+		tableSelect.buttons()
+		.container()
+		.appendTo( '#buttonsDiv' );
 
 
 
