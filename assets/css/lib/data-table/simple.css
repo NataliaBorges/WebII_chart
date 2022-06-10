@@ -1,0 +1,114 @@
+.card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-header {
+    border-color: #eaeaea;
+    position: relative;
+    background: transparent;
+    padding: 1.25rem 1.25rem 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0px;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #454545;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.card-header .card-title {
+    margin-bottom: 0px;
+}
+
+table {
+    padding: 3rem 0 4rem 0;
+}
+
+th {
+    text-align: inherit;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 0;
+    border-top: 0;
+}
+
+table.dataTable thead th {
+    color: #454545;
+    font-weight: 600;
+}
+
+table.dataTable tbody tr, table.dataTable tbody td {
+    background: transparent !important;
+}
+
+table.dataTable tbody td {
+    padding: 15px 18px;
+}
+
+table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
+    border-color: #eaeaea;
+}
+
+table.dataTable tbody tr, table.dataTable tbody td {
+    background: transparent !important;
+}
+
+table.dataTable tfoot th, table.dataTable tfoot td {
+    border-top: 0;
+}
+
+table.dataTable tfoot th {
+    color: #454545;
+    font-weight: 600;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    border-radius: 50%;
+    color: #593bdb !important;
+    background: rgba(89, 59, 219, 0.1);
+    border: 0 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border: 0;
+}
+
+.dataTables_wrapper input[type="search"], .dataTables_wrapper input[type="text"], .dataTables_wrapper select {
+    border: 1px solid #e2e2e2;
+    padding: 0.3rem 0.5rem;
+    color: #715d5d;
+    border-radius: 5px;
+}
+
+.dataTables_wrapper input[type="search"], .dataTables_wrapper input[type="text"], .dataTables_wrapper select {
+    border: 1px solid #e2e2e2;
+    padding: 0.3rem 0.5rem;
+    color: #715d5d;
+    border-radius: 5px;
+}
+
+thead tr th:last-child {
+    text-align: left;
+}
+
+tbody tr td:last-child {
+    text-align: left;
+}
+
+

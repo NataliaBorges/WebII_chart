@@ -31,7 +31,7 @@
 
 <body>
     <?php
-        require_once "../../Menu.php";
+        require_once "../../Util/Menu.php";
     ?>
 
     <div class="content-wrap">
@@ -253,13 +253,9 @@
                     </div>
                     <!-- /# row -->
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                        require_once "../../Util/Footer.php";
+                    ?>
                 </section>
             </div>
         </div>

@@ -40,18 +40,31 @@ CREATE TABLE Editora (
     Email VARCHAR(255) NOT NULL
 );
 
-SELECT  L.Titulo,
-        L.Edicao,
-        L.Ano_Publicacao,
-        L.Data_Aquisicao,
-        L.ISBN,
-        G.Nome_Genero,
-		A.Nome_Autor,
-		ED.Nome_Editora,
-		COUNT(E.Id) AS Exemplares
-FROM Exemplar AS E
-INNER JOIN Livro AS L ON (L.Id = E.Id_livro)
-INNER JOIN Genero AS G ON (L.Id_genero = G.Id)
-INNER JOIN Autor AS A ON (L.Id_autor = A.Id)
-INNER JOIN Editora AS ED ON (L.Id_editora = ED.Id)
-GROUP BY L.TItulo, L.Edicao, L.Ano_Publicacao, L.Data_Aquisicao, L.ISBN, G.Nome_Genero, A.Nome_Autor, ED.Nome_Editora;
+SELECT Editora.Nome_Editora, Livro.Titulo, Livro.Edicao, Livro.Ano_Publicacao, Livro.ISBN, Genero.Nome_Genero, Autor.Nome_Autor
+COUNT(Exemplar.Id) AS Quantidade_Exemplares
+FROM Editora
+INNER JOIN Livro ON Editora.Id = Livro.Id_editora
+INNER JOIN Genero ON Livro.Id_genero = Genero.Id
+INNER JOIN Autor ON Livro.Id_autor = Autor.Id
+INNER JOIN Exemplar ON Livro.Id = Exemplar.Id_livro
+GROUP BY Editora.Nome_Editora, Livro.Titulo, Livro.Edicao, Livro.Ano_Publicacao, Livro.ISBN, Genero.Nome_Genero, Autor.Nome_Autor
+ORDER BY Editora.Nome_Editora, Livro.Titulo, Livro.Edicao, Livro.Ano_Publicacao, Livro.ISBN, Genero.Nome_Genero, Autor.Nome_Autor;
+
+
+
+
+SELECT Genero.Nome_Genero,
+Livro.Titulo,
+Livro.Edicao,
+Livro.Ano_Publicacao,
+Livro.ISBN,
+Autor.Nome_Autor,
+Editora.Nome_Editora,
+FROM Genero
+INNER JOIN Livro ON (Genero.Id = Livro.Id_genero)
+INNER JOIN Autor ON (Livro.Id_autor = Autor.Id)
+INNER JOIN Editora ON (Livro.Id_editora = Editora.Id)
+
+
+
+

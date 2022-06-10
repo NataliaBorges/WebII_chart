@@ -63,6 +63,26 @@ let dataSet = [
     this.nodes().to$().removeClass('selected')
     });
 
+    var Autor = $('#Autor').DataTable({
+        createdRow: function ( row, data, index ) {
+           $(row).addClass('selected')
+        } 
+    });
+      
+    Autor.on('click', 'tbody tr', function() {
+    var $rowAutor = Autor.row(this).nodes().to$();
+    var hasClassAutor = $rowAutor.hasClass('selected');
+    if (hasClassAutor) {
+        $rowAutor.removeClass('selected')
+    } else {
+        $rowAutor.addClass('selected')
+    }
+    })
+    
+    Autor.rows().every(function() {
+    this.nodes().to$().removeClass('selected')
+    });
+
 
 
     //example 2

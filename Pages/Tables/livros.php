@@ -55,11 +55,12 @@ try{
     <link href="/assets/css/lib/helper.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/lib/data-table/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/lib/data-table/simple.css" rel="stylesheet">
 </head>
 
 <body>
     <?php
-        require_once "../../Menu.php";
+        require_once "../../Util/Menu.php";
     ?>
 
     <div class="content-wrap">
@@ -70,7 +71,7 @@ try{
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Basic Datatable</h4>
+                                <h4 class="card-title">Relatório de Livros</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -85,7 +86,7 @@ try{
                                                 <th>Gênero</th>
                                                 <th>Autor</th>
                                                 <th>Editora</th>
-                                                <th>Exemplares</th>
+                                                <th>Qtd. de Exemplares</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -96,7 +97,7 @@ try{
                                                 <td><?php echo $livro['Titulo']; ?></td>
                                                 <td><?php echo $livro['Edicao']; ?></td>
                                                 <td><?php echo $livro['Ano_Publicacao']; ?></td>
-                                                <td><?php echo $livro['Data_Aquisicao']; ?></td>
+                                                <td><?php echo date('d/m/Y',  strtotime($livro['Data_Aquisicao'])); ?></td>
                                                 <td><?php echo $livro['ISBN']; ?></td>
                                                 <td><?php echo $livro['Nome_Genero']; ?></td>
                                                 <td><?php echo $livro['Nome_Autor']; ?></td>
@@ -117,7 +118,7 @@ try{
                                                 <th>Gênero</th>
                                                 <th>Autor</th>
                                                 <th>Editora</th>
-                                                <th>Exemplares</th>
+                                                <th>Qtd. de Exemplares</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -129,13 +130,9 @@ try{
                     </div>
                     <!-- /# row -->
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2022 © Dark Read.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                        require_once "../../Util/Footer.php";
+                    ?>
                 </section>
             </div>
         </div>
