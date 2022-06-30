@@ -20,6 +20,40 @@ try{
                                     ORDER BY FUNCIONARIO.Nome_Funcionario;
     ");
 $funcionarios   = $query->fetchAll();
+$query2      = $Conexao->query("
+                                    SELECT	Funcionario.Nome_funcionario,
+                                            Funcao.Nome_funcao,
+                                            Estado.Nome_Estado as Estado_funcionario,
+                                            Livro.Titulo,
+                                            Livro.Edicao,
+                                            Livro.Ano_Publicacao,
+                                            Livro.ISBN,
+                                            Autor.Nome_autor,
+                                            Genero.Nome_Genero,
+                                            Autor.Nome_Autor,
+                                            Editora.Nome_Editora,
+                                            Leitor.Nome_leitor,
+                                            Emprestimo.Data_Emprestimo,
+                                            Emprestimo.Data_Devolucao,
+                                            Emprestimo.Obs_Emprestimo,
+                                            Status_Emprestimo.Nome_Status,
+                                            EE.Nome_Estado as Estado_emprestimo
+                                    FROM Funcionario
+                                    INNER JOIN Emprestimo ON (Funcionario.Id = Emprestimo.Id_funcionario)
+                                    INNER JOIN Funcao ON (funcao.Id = Funcionario.Id_funcao)
+                                    INNER JOIN Estado ON (Funcionario.Id_estado = Estado.Id)
+                                    INNER JOIN Estado AS EE ON (EE.Id = Emprestimo.Id_estado)
+                                    INNER JOIN Status_Emprestimo ON (Emprestimo.Id_emprestimoStatus = Status_Emprestimo.Id)
+                                    INNER JOIN Item_Emprestimo  ON (Item_Emprestimo.Id_emprestimo = Emprestimo.Id)
+                                    INNER JOIN Exemplar  ON (Exemplar.Id = Item_Emprestimo.Id_exemplar)
+                                    INNER JOIN Livro  ON (Livro.Id = Exemplar.Id_livro)
+                                    INNER JOIN Genero  ON (Genero.Id = Livro.Id_genero)
+                                    INNER JOIN Autor  ON (Autor.Id = Livro.Id_autor)
+                                    INNER JOIN Editora  ON (Editora.Id = Livro.Id_editora)
+                                    INNER JOIN Leitor  ON (leitor.Id = Emprestimo.Id_leitor)
+                                    ORDER BY Funcionario.Nome_funcionario;
+    ");
+    $LivrosFuncionario   = $query2->fetchAll();
  }catch(Exception $e){
     echo $e->getMessage();
     exit;
@@ -146,6 +180,107 @@ $funcionarios   = $query->fetchAll();
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Funcionários e Empréstimos</h4>
+                                </div>
+                                <div class="buttonsDiv" id="buttonsDiv2"></div>
+                                <div class="bootstrap-data-table-panel">
+                                    <div class="table-responsive">
+                                        <table id="row-select1" class="display table table-borderd table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Funcionário</th>
+                                                <th>Função</th>
+                                                <th>Est. Funcionário</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>ISBN</th>
+                                                <th>Autor</th>
+                                                <th>Gênero</th>
+                                                <th>Editora</th>
+                                                <th>Leitor</th>
+                                                <th>Empréstimo</th>
+                                                <th>Devolução</th>
+                                                <th>Observação</th>
+                                                <th>Status</th>
+                                                <th>Est. Empréstimo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            foreach($LivrosFuncionario as $LivroFuncionario) {
+                                        ?>
+                                            <tr>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_funcionario']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_funcao']; ?></td>
+                                                <td style="padding-left: 18px !important;padding-right: 100px;"><?php echo $LivroFuncionario['Estado_funcionario']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Titulo']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Edicao']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Ano_Publicacao']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['ISBN']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_autor']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_Genero']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_Editora']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_leitor']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime($LivroFuncionario['Data_Emprestimo'])); ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime($LivroFuncionario['Data_Devolucao'])); ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Obs_Emprestimo']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $LivroFuncionario['Nome_Status']; ?></td>
+                                                <td style="padding-left: 18px !important;padding-right: 100px;"><?php echo $LivroFuncionario['Estado_emprestimo']; ?></td>
+                                            </tr>
+                                        <?php
+                                            }
+                                        ?>
+                                        </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>Funcionário</th>
+                                                <th>Função</th>
+                                                <th>Est. Funcionário</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>ISBN</th>
+                                                <th>Autor</th>
+                                                <th>Gênero</th>
+                                                <th>Editora</th>
+                                                <th>Leitor</th>
+                                                <th>Empréstimo</th>
+                                                <th>Devolução</th>
+                                                <th>Observação</th>
+                                                <th>Status</th>
+                                                <th>Est.Empréstimo</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Funcionário</th>
+                                                <th>Função</th>
+                                                <th>Est. Funcionário</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>ISBN</th>
+                                                <th>Autor</th>
+                                                <th>Gênero</th>
+                                                <th>Editora</th>
+                                                <th>Leitor</th>
+                                                <th>Empréstimo</th>
+                                                <th>Devolução</th>
+                                                <th>Observação</th>
+                                                <th>Status</th>
+                                                <th>Est.Empréstimo</th>
+                                            </tr>
+                                        </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /# card -->
+                        </div>
                     </div>
                     <!-- /# row -->
 

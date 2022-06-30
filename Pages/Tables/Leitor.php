@@ -18,6 +18,35 @@ try{
                                     ORDER BY Leitor.Nome_Leitor;
 ");
 $Leitores   = $query->fetchAll();
+$query2      = $Conexao->query("
+                                SELECT	LE.Nome_Leitor,
+                                        L.Titulo,
+                                        L.Edicao,
+                                        L.Ano_Publicacao,
+                                        L.ISBN,
+                                        G.Nome_Genero,
+                                        A.Nome_Autor,
+                                        E.Nome_Editora,
+                                        EM.Data_Emprestimo,
+                                        EM.Data_Devolucao,
+                                        EM.Obs_Emprestimo,
+                                        F.Nome_Funcionario,
+                                        SE.Nome_Status,
+                                        EST.Nome_Estado
+                                FROM Leitor as LE
+                                INNER JOIN Emprestimo AS EM ON (EM.Id_leitor = LE.Id)
+                                INNER JOIN ESTADO AS EST ON (EST.Id = EM.Id_estado)
+                                INNER JOIN Status_Emprestimo AS SE ON (SE.Id = EM.Id_emprestimoStatus)
+                                INNER JOIN Funcionario AS F ON (F.Id = EM.Id_funcionario)
+                                INNER JOIN Item_Emprestimo AS IT ON (IT.Id_emprestimo = EM.Id)
+                                INNER JOIN Exemplar AS EX ON (EX.Id = IT.Id_exemplar)
+                                INNER JOIN Livro AS L ON (L.Id = EX.Id_livro)
+                                INNER JOIN Genero AS G ON (G.Id = L.Id_genero)
+                                INNER JOIN Autor AS A ON (A.Id = L.Id_autor)
+                                INNER JOIN Editora AS E ON (E.Id = L.Id_editora)
+                                ORDER BY LE.Nome_Leitor
+    ");
+    $Leitoreslivros   = $query2->fetchAll();
  }catch(Exception $e){
     echo $e->getMessage();
     exit;
@@ -144,6 +173,99 @@ $Leitores   = $query->fetchAll();
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Leitores e Títulos</h4>
+                                </div>
+                                <div class="buttonsDiv" id="buttonsDiv2"></div>
+                                <div class="bootstrap-data-table-panel">
+                                    <div class="table-responsive">
+                                        <table id="row-select1" class="display table table-borderd table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>ISBN</th>
+                                                <th>Gênero</th>
+                                                <th>Autor</th>
+                                                <th>Editora</th>
+                                                <th>Empréstimo</th>
+                                                <th>Devolução</th>
+                                                <th>Obsevação</th>
+                                                <th>Funcionário</th>
+                                                <th>Status</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            foreach($Leitoreslivros as $Leitorlivro) {
+                                        ?>
+                                            <tr>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Leitor']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Titulo']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Edicao']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Ano_Publicacao']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['ISBN']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Genero']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Autor']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Editora']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime( $Leitorlivro['Data_Emprestimo'])); ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime( $Leitorlivro['Data_Devolucao'])); ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Obs_Emprestimo']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Funcionario']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Status']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $Leitorlivro['Nome_Estado']; ?></td>
+                                            </tr>
+                                        <?php
+                                            }
+                                        ?>
+                                        </tbody>
+                                        <thead>
+                                            <tr>
+                                            <th>Nome</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>ISBN</th>
+                                                <th>Gênero</th>
+                                                <th>Autor</th>
+                                                <th>Editora</th>
+                                                <th>Empréstimo</th>
+                                                <th>Devolução</th>
+                                                <th>Obsevação</th>
+                                                <th>Funcionário</th>
+                                                <th>Status</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                            <th>Nome</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>ISBN</th>
+                                                <th>Gênero</th>
+                                                <th>Autor</th>
+                                                <th>Editora</th>
+                                                <th>Empréstimo</th>
+                                                <th>Devolução</th>
+                                                <th>Obsevação</th>
+                                                <th>Funcionário</th>
+                                                <th>Status</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /# card -->
+                        </div>
                     </div>
                     <!-- /# row -->
 

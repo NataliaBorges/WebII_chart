@@ -6,20 +6,31 @@ try{
                                     SELECT	L.Titulo,
                                             L.Edicao,
                                             L.Ano_Publicacao,
-                                            L.Data_Aquisicao,
                                             L.ISBN,
-                                            G.Nome_Genero,
                                             A.Nome_Autor,
-                                            ED.Nome_Editora,
-                                            COUNT(E.Id) AS Exemplares
+                                            E.Nome_Editora,
+                                            G.Nome_Genero,
+                                            EM.Data_Emprestimo,
+                                            EM.Data_Devolucao,
+                                            EM.Obs_Emprestimo,
+                                            LE.Nome_Leitor,
+                                            F.Nome_Funcionario,
+                                            SE.Nome_Status,
+                                            EST.Nome_Estado
                                     FROM Livro AS L
-                                    Left JOIN Exemplar AS E ON (L.Id = E.Id_livro)
-                                    INNER JOIN Genero AS G ON (L.Id_genero = G.Id)
                                     INNER JOIN Autor AS A ON (L.Id_autor = A.Id)
-                                    INNER JOIN Editora AS ED ON (L.Id_editora = ED.Id)
-                                    GROUP BY L.TItulo, L.Edicao, L.Ano_Publicacao, L.Data_Aquisicao, L.ISBN, G.Nome_Genero, A.Nome_Autor, ED.Nome_Editora;
+                                    INNER JOIN Editora AS E ON (L.Id_editora = E.Id)
+                                    INNER JOIN Genero AS G ON (G.Id = L.Id_genero)
+                                    INNER JOIN Exemplar AS EX ON (L.Id = EX.Id_livro)
+                                    INNER JOIN Item_Emprestimo AS IT ON (EX.Id = IT.Id_exemplar)
+                                    INNER JOIN Emprestimo AS EM ON (EM.Id = IT.Id_emprestimo)
+                                    INNER JOIN Funcionario AS F ON (F.Id = EM.Id_funcionario)
+                                    INNER JOIN LEITOR AS LE ON (LE.Id = EM.Id_leitor)
+                                    INNER JOIN Status_Emprestimo AS SE ON (SE.Id = EM.Id_emprestimoStatus)
+                                    INNER JOIN Estado AS EST ON (EST.Id = EM.Id_estado)
+                                    ORDER BY L.Titulo;
     ");
-    $livros   = $query->fetchAll();
+    $emprestimos   = $query->fetchAll();
  }catch(Exception $e){
     echo $e->getMessage();
     exit;
@@ -75,7 +86,7 @@ try{
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-title">
-                                    <h4>Livros e Quantidade de Exemplares</h4>
+                                    <h4>Livros e Empréstimos</h4>
                                 </div>
                                 <div class="buttonsDiv" id="buttonsDiv"></div>
                                 <div class="bootstrap-data-table-panel">
@@ -83,31 +94,41 @@ try{
                                         <table id="row-select" class="display table table-borderd table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Livro</th>
+                                                    <th>Título</th>
                                                     <th>Edição</th>
                                                     <th>Publicação</th>
-                                                    <th>Aquisição</th>
                                                     <th>ISBN</th>
-                                                    <th>Gênero</th>
                                                     <th>Autor</th>
                                                     <th>Editora</th>
-                                                    <th>Exemplares</th>
+                                                    <th>Gênero</th>
+                                                    <th>Empréstimo</th>
+                                                    <th>Devolução</th>
+                                                    <th>Observação</th>
+                                                    <th>Leitor</th>
+                                                    <th>Funcionário</th>
+                                                    <th>Status</th>
+                                                    <th>Estado</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php
-                                            foreach($livros  as $livro) {
+                                            foreach($emprestimos as $emprestimo) {
                                             ?>
                                                 <tr>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Titulo']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Edicao']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Ano_Publicacao']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime($livro['Data_Aquisicao'])); ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['ISBN']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Nome_Genero']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Nome_Autor']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Nome_Editora']; ?></td>
-                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Exemplares']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Titulo']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Edicao']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Ano_Publicacao']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['ISBN']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Autor']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Editora']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Genero']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Data_Emprestimo']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Data_Devolucao']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Obs_Emprestimo']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Leitor']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Funcionario']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Status']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $emprestimo['Nome_Estado']; ?></td>
                                                 </tr>
                                             <?php
                                             }
@@ -115,28 +136,38 @@ try{
                                             </tbody>
                                             <thead>
                                                 <tr>
-                                                    <th>Livro</th>
+                                                <th>Título</th>
                                                     <th>Edição</th>
                                                     <th>Publicação</th>
-                                                    <th>Aquisição</th>
                                                     <th>ISBN</th>
-                                                    <th>Gênero</th>
                                                     <th>Autor</th>
                                                     <th>Editora</th>
-                                                    <th>Exemplares</th>
+                                                    <th>Gênero</th>
+                                                    <th>Empréstimo</th>
+                                                    <th>Devolução</th>
+                                                    <th>Observação</th>
+                                                    <th>Leitor</th>
+                                                    <th>Funcionário</th>
+                                                    <th>Status</th>
+                                                    <th>Estado</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Livro</th>
+                                                <th>Título</th>
                                                     <th>Edição</th>
                                                     <th>Publicação</th>
-                                                    <th>Aquisição</th>
                                                     <th>ISBN</th>
-                                                    <th>Gênero</th>
                                                     <th>Autor</th>
                                                     <th>Editora</th>
-                                                    <th>Exemplares</th>
+                                                    <th>Gênero</th>
+                                                    <th>Empréstimo</th>
+                                                    <th>Devolução</th>
+                                                    <th>Observação</th>
+                                                    <th>Leitor</th>
+                                                    <th>Funcionário</th>
+                                                    <th>Status</th>
+                                                    <th>Estado</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
