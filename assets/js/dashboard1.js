@@ -51,44 +51,44 @@
 		}
 	} );
 
-	var plot = $.plot( "#cpu-load", [ getRandomData() ], {
-		series: {
-			shadowSize: 0 // Drawing is faster without shadows
-		},
-		yaxis: {
-			min: 0,
-			max: 100
-		},
-		xaxis: {
-			show: false
-		},
-		colors: [ "#007BFF" ],
-		grid: {
-			color: "transparent",
-			hoverable: true,
-			borderWidth: 0,
-			backgroundColor: 'transparent'
-		},
-		tooltip: true,
-		tooltipOpts: {
-			content: "Y: %y",
-			defaultTheme: false
-		}
+	// var plot = $.plot( "#cpu-load", [ getRandomData() ], {
+	// 	series: {
+	// 		shadowSize: 0 // Drawing is faster without shadows
+	// 	},
+	// 	yaxis: {
+	// 		min: 0,
+	// 		max: 100
+	// 	},
+	// 	xaxis: {
+	// 		show: false
+	// 	},
+	// 	colors: [ "#007BFF" ],
+	// 	grid: {
+	// 		color: "transparent",
+	// 		hoverable: true,
+	// 		borderWidth: 0,
+	// 		backgroundColor: 'transparent'
+	// 	},
+	// 	tooltip: true,
+	// 	tooltipOpts: {
+	// 		content: "Y: %y",
+	// 		defaultTheme: false
+	// 	}
 
 
-	} );
+	// } );
 
-	function update() {
+	// function update() {
 
-		plot.setData( [ getRandomData() ] );
+	// 	plot.setData( [ getRandomData() ] );
 
-		// Since the axes don't change, we don't need to call plot.setupGrid()
+	// 	// Since the axes don't change, we don't need to call plot.setupGrid()
 
-		plot.draw();
-		setTimeout( update, updateInterval );
-	}
+	// 	plot.draw();
+	// 	setTimeout( update, updateInterval );
+	// }
 
-	update();
+	// update();
 
 
 } )( jQuery );

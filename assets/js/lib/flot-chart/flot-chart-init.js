@@ -51,44 +51,44 @@
 		}
 	} );
 
-	var plot = $.plot( "#cpu-load", [ getRandomData() ], {
-		series: {
-			shadowSize: 0 // Drawing is faster without shadows
-		},
-		yaxis: {
-			min: 0,
-			max: 100
-		},
-		xaxis: {
-			show: false
-		},
-		colors: [ "#007BFF" ],
-		grid: {
-			color: "transparent",
-			hoverable: true,
-			borderWidth: 0,
-			backgroundColor: 'transparent'
-		},
-		tooltip: true,
-		tooltipOpts: {
-			content: "Y: %y",
-			defaultTheme: false
-		}
+	// var plot = $.plot( "#cpu-load", [ getRandomData() ], {
+	// 	series: {
+	// 		shadowSize: 0 // Drawing is faster without shadows
+	// 	},
+	// 	yaxis: {
+	// 		min: 0,
+	// 		max: 100
+	// 	},
+	// 	xaxis: {
+	// 		show: false
+	// 	},
+	// 	colors: [ "#007BFF" ],
+	// 	grid: {
+	// 		color: "transparent",
+	// 		hoverable: true,
+	// 		borderWidth: 0,
+	// 		backgroundColor: 'transparent'
+	// 	},
+	// 	tooltip: true,
+	// 	tooltipOpts: {
+	// 		content: "Y: %y",
+	// 		defaultTheme: false
+	// 	}
 
 
-	} );
+	// } );
 
-	function update() {
+	// function update() {
 
-		plot.setData( [ getRandomData() ] );
+	// 	plot.setData( [ getRandomData() ] );
 
-		// Since the axes don't change, we don't need to call plot.setupGrid()
+	// 	// Since the axes don't change, we don't need to call plot.setupGrid()
 
-		plot.draw();
-		setTimeout( update, updateInterval );
-	}
+	// 	plot.draw();
+	// 	setTimeout( update, updateInterval );
+	// }
 
-	update();
+	// update();
 
 
 } )( jQuery );
@@ -107,44 +107,44 @@ $( function () {
 		cos.push( [ i, Math.cos( i ) ] );
 	}
 
-	var plot = $.plot( "#flot-line", [
-		{
-			data: sin,
-			label: "sin(x)"
-        },
-		{
-			data: cos,
-			label: "cos(x)"
-        }
-		], {
-		series: {
-			lines: {
-				show: true
-			},
-			points: {
-				show: true
-			}
-		},
-		yaxis: {
-			min: -1.2,
-			max: 1.2
-		},
-		colors: [ "#007BFF", "#DC3545" ],
-		grid: {
-			color: "#fff",
-			hoverable: true,
-			borderWidth: 0,
-			backgroundColor: 'transparent'
-		},
-		tooltip: true,
-		tooltipOpts: {
-			content: "'%s' of %x.1 is %y.4",
-			shifts: {
-				x: -60,
-				y: 25
-			}
-		}
-	} );
+	// var plot = $.plot( "#flot-line", [
+	// 	{
+	// 		data: sin,
+	// 		label: "sin(x)"
+    //     },
+	// 	{
+	// 		data: cos,
+	// 		label: "cos(x)"
+    //     }
+	// 	], {
+	// 	series: {
+	// 		lines: {
+	// 			show: true
+	// 		},
+	// 		points: {
+	// 			show: true
+	// 		}
+	// 	},
+	// 	yaxis: {
+	// 		min: -1.2,
+	// 		max: 1.2
+	// 	},
+	// 	colors: [ "#007BFF", "#DC3545" ],
+	// 	grid: {
+	// 		color: "#fff",
+	// 		hoverable: true,
+	// 		borderWidth: 0,
+	// 		backgroundColor: 'transparent'
+	// 	},
+	// 	tooltip: true,
+	// 	tooltipOpts: {
+	// 		content: "'%s' of %x.1 is %y.4",
+	// 		shifts: {
+	// 			x: -60,
+	// 			y: 25
+	// 		}
+	// 	}
+	// } );
 
 } );
 
@@ -152,57 +152,57 @@ $( function () {
 /*  Pie
 ------------*/
 
-$( function () {
+// $( function () {
 
-	var data = [
-		{
-			label: "Primary",
-			data: 1,
-			color: "#8fc9fb"
-        },
-		{
-			label: "Success",
-			data: 3,
-			color: "#007BFF"
-        },
-		{
-			label: "Danger",
-			data: 9,
-			color: "#19A9D5"
-        },
-		{
-			label: "Warning",
-			data: 20,
-			color: "#DC3545"
-        }
-    ];
+// 	var data = [
+// 		{
+// 			label: "Primary",
+// 			data: 1,
+// 			color: "#8fc9fb"
+//         },
+// 		{
+// 			label: "Success",
+// 			data: 3,
+// 			color: "#007BFF"
+//         },
+// 		{
+// 			label: "Danger",
+// 			data: 9,
+// 			color: "#19A9D5"
+//         },
+// 		{
+// 			label: "Warning",
+// 			data: 20,
+// 			color: "#DC3545"
+//         }
+//     ];
 
-	var plotObj = $.plot( $( "#flot-pie" ), data, {
-		series: {
-			pie: {
-				show: true,
-				radius: 1,
-				label: {
-					show: false,
+// 	var plotObj = $.plot( $( "#flot-pie" ), data, {
+// 		series: {
+// 			pie: {
+// 				show: true,
+// 				radius: 1,
+// 				label: {
+// 					show: false,
 
-				}
-			}
-		},
-		grid: {
-			hoverable: true
-		},
-		tooltip: {
-			show: true,
-			content: "%p.0%, %s, n=%n", // show percentages, rounding to 2 decimal places
-			shifts: {
-				x: 20,
-				y: 0
-			},
-			defaultTheme: false
-		}
-	} );
+// 				}
+// 			}
+// 		},
+// 		grid: {
+// 			hoverable: true
+// 		},
+// 		tooltip: {
+// 			show: true,
+// 			content: "%p.0%, %s, n=%n", // show percentages, rounding to 2 decimal places
+// 			shifts: {
+// 				x: 20,
+// 				y: 0
+// 			},
+// 			defaultTheme: false
+// 		}
+// 	} );
 
-} );
+// } );
 
 
 /*  Line
@@ -211,50 +211,50 @@ $( function () {
 $( function () {
 
 	// first chart
-	var chart1Options = {
-		series: {
-			lines: {
-				show: true
-			},
-			points: {
-				show: true
-			}
-		},
-		xaxis: {
-			mode: "time",
-			timeformat: "%m/%d",
-			minTickSize: [ 1, "day" ]
-		},
-		grid: {
-			hoverable: true
-		},
-		legend: {
-			show: false
-		},
-		grid: {
-			color: "#fff",
-			hoverable: true,
-			borderWidth: 0,
-			backgroundColor: 'transparent'
-		},
-		tooltip: {
-			show: true,
-			content: "y: %y"
-		}
-	};
-	var chart1Data = {
-		label: "chart1",
-		color: "#007BFF",
-		data: [
-      [ 1354521600000, 6322 ],
-      [ 1355040000000, 6360 ],
-      [ 1355223600000, 6368 ],
-      [ 1355306400000, 6374 ],
-      [ 1355487300000, 6388 ],
-      [ 1355571900000, 6393 ]
-    ]
-	};
-	$.plot( $( "#chart1" ), [ chart1Data ], chart1Options );
+	// var chart1Options = {
+	// 	series: {
+	// 		lines: {
+	// 			show: true
+	// 		},
+	// 		points: {
+	// 			show: true
+	// 		}
+	// 	},
+	// 	xaxis: {
+	// 		mode: "time",
+	// 		timeformat: "%m/%d",
+	// 		minTickSize: [ 1, "day" ]
+	// 	},
+	// 	grid: {
+	// 		hoverable: true
+	// 	},
+	// 	legend: {
+	// 		show: false
+	// 	},
+	// 	grid: {
+	// 		color: "#fff",
+	// 		hoverable: true,
+	// 		borderWidth: 0,
+	// 		backgroundColor: 'transparent'
+	// 	},
+	// 	tooltip: {
+	// 		show: true,
+	// 		content: "y: %y"
+	// 	}
+	// };
+	// var chart1Data = {
+	// 	label: "chart1",
+	// 	color: "#007BFF",
+	// 	data: [
+    //   [ 1354521600000, 6322 ],
+    //   [ 1355040000000, 6360 ],
+    //   [ 1355223600000, 6368 ],
+    //   [ 1355306400000, 6374 ],
+    //   [ 1355487300000, 6388 ],
+    //   [ 1355571900000, 6393 ]
+    // ]
+	// };
+	// $.plot( $( "#chart1" ), [ chart1Data ], chart1Options );
 
 } );
 
@@ -264,111 +264,111 @@ $( function () {
 $( function () {
 
 	// second chart
-	var flotBarOptions = {
-		series: {
-			bars: {
-				show: true,
-				barWidth: 43200000
-			}
-		},
-		xaxis: {
-			mode: "time",
-			timeformat: "%m/%d",
-			minTickSize: [ 1, "day" ]
-		},
-		grid: {
-			hoverable: true
-		},
-		legend: {
-			show: false
-		},
-		grid: {
-			color: "#fff",
-			hoverable: true,
-			borderWidth: 0,
-			backgroundColor: 'transparent'
-		},
-		tooltip: {
-			show: true,
-			content: "x: %x, y: %y"
-		}
-	};
-	var flotBarData = {
-		label: "flotBar",
-		color: "#007BFF",
-		data: [
-      [ 1354521600000, 1000 ],
-      [ 1355040000000, 2000 ],
-      [ 1355223600000, 3000 ],
-      [ 1355306400000, 4000 ],
-      [ 1355487300000, 5000 ],
-      [ 1355571900000, 6000 ]
-    ]
-	};
-	$.plot( $( "#flotBar" ), [ flotBarData ], flotBarOptions );
+	// var flotBarOptions = {
+	// 	series: {
+	// 		bars: {
+	// 			show: true,
+	// 			barWidth: 43200000
+	// 		}
+	// 	},
+	// 	xaxis: {
+	// 		mode: "time",
+	// 		timeformat: "%m/%d",
+	// 		minTickSize: [ 1, "day" ]
+	// 	},
+	// 	grid: {
+	// 		hoverable: true
+	// 	},
+	// 	legend: {
+	// 		show: false
+	// 	},
+	// 	grid: {
+	// 		color: "#fff",
+	// 		hoverable: true,
+	// 		borderWidth: 0,
+	// 		backgroundColor: 'transparent'
+	// 	},
+	// 	tooltip: {
+	// 		show: true,
+	// 		content: "x: %x, y: %y"
+	// 	}
+	// };
+	// var flotBarData = {
+	// 	label: "flotBar",
+	// 	color: "#007BFF",
+	// 	data: [
+    //   [ 1354521600000, 1000 ],
+    //   [ 1355040000000, 2000 ],
+    //   [ 1355223600000, 3000 ],
+    //   [ 1355306400000, 4000 ],
+    //   [ 1355487300000, 5000 ],
+    //   [ 1355571900000, 6000 ]
+    // ]
+	// };
+	// $.plot( $( "#flotBar" ), [ flotBarData ], flotBarOptions );
 
 
 } );
 
 $( function () {
-	var d1 = [ [ 20, 20 ], [ 42, 60 ], [ 54, 20 ], [ 80, 80 ] ];
+	// var d1 = [ [ 20, 20 ], [ 42, 60 ], [ 54, 20 ], [ 80, 80 ] ];
 
-	//flot options
-	var options = {
-		legend: {
-			show: false
-		},
-		series: {
-			label: "Curved Lines Test",
-			curvedLines: {
-				active: true,
-				nrSplinePoints: 20
-			}
-		},
+	// //flot options
+	// var options = {
+	// 	legend: {
+	// 		show: false
+	// 	},
+	// 	series: {
+	// 		label: "Curved Lines Test",
+	// 		curvedLines: {
+	// 			active: true,
+	// 			nrSplinePoints: 20
+	// 		}
+	// 	},
 
-		grid: {
-			color: "#fff",
-			hoverable: true,
-			borderWidth: 0,
-			backgroundColor: 'transparent'
-		},
-		tooltip: {
-			show: true,
-			content: "%s | x: %x; y: %y"
-		},
-		yaxes: [ {
-			min: 10,
-			max: 90
-        }, {
-			position: 'right'
-        } ]
-	};
+	// 	grid: {
+	// 		color: "#fff",
+	// 		hoverable: true,
+	// 		borderWidth: 0,
+	// 		backgroundColor: 'transparent'
+	// 	},
+	// 	tooltip: {
+	// 		show: true,
+	// 		content: "%s | x: %x; y: %y"
+	// 	},
+	// 	yaxes: [ {
+	// 		min: 10,
+	// 		max: 90
+    //     }, {
+	// 		position: 'right'
+    //     } ]
+	// };
 
-	//plotting
-	$.plot( $( "#flotCurve" ), [
-		{
-			data: d1,
-			lines: {
-				show: true,
-				fill: true,
-				fillColor: "rgba(0,123,255,.15)",
-				lineWidth: 3
-			},
-			//curve the line  (old pre 1.0.0 plotting function)
-			curvedLines: {
-				apply: true,
-				show: true,
-				fill: true,
-				fillColor: "rgba(0,123,255,.15)",
+	// //plotting
+	// $.plot( $( "#flotCurve" ), [
+	// 	{
+	// 		data: d1,
+	// 		lines: {
+	// 			show: true,
+	// 			fill: true,
+	// 			fillColor: "rgba(0,123,255,.15)",
+	// 			lineWidth: 3
+	// 		},
+	// 		//curve the line  (old pre 1.0.0 plotting function)
+	// 		curvedLines: {
+	// 			apply: true,
+	// 			show: true,
+	// 			fill: true,
+	// 			fillColor: "rgba(0,123,255,.15)",
 
-			}
-      }, {
-			data: d1,
-			points: {
-				show: true,
-				fill: true,
-				fillColor: "rgba(0,123,255,.15)",
-			}
-      }
-      ], options );
+	// 		}
+    //   }, {
+	// 		data: d1,
+	// 		points: {
+	// 			show: true,
+	// 			fill: true,
+	// 			fillColor: "rgba(0,123,255,.15)",
+	// 		}
+    //   }
+    //   ], options );
 } );

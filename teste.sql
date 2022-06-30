@@ -181,5 +181,142 @@ GROUP BY FUNCIONARIO.Nome_Funcionario, FUNCIONARIO.Data_Nascimento, FUNCIONARIO.
 ORDER BY FUNCIONARIO.Nome_Funcionario;
 
 
-SELECT 
+SELECT L.Titulo,
+L.Edicao,
+L.Ano_Publicacao,
+L.ISBN,
+Autor.Nome_Autor,
+Editora.Nome_Editora,
+Emprestimo.Data_Emprestimo,
+Emprestimo.Data_Devolucao,
+Emprestimo.Obs_Emprestimo,
+Leitor.Nome_Leitor,
+Funcionario.Nome_Funcionario,
+EmprestimoStatus.Nome_EmprestimoStatus,
+Estado.Nome_Estado
+FROM Livro AS L
+INNER JOIN Autor AS A ON (L.Id_autor = A.Id)
+INNER JOIN Editora AS E ON (L.Id_editora = E.Id)
+INNER JOIN Emprestimo AS EM ON (L.Id = EM.Id_livro)
+INNER JOIN Leitor AS LE ON (EM.Id_leitor = LE.Id)
+INNER JOIN Funcionario AS F ON (EM.Id_funcionario = F.Id)
+INNER JOIN EmprestimoStatus AS ES ON (EM.Id_emprestimoStatus = ES.Id)
+INNER JOIN Estado AS ES ON (EM.Id_estado = ES.Id)
+ORDER BY L.Titulo;
 
+
+SELECT	LE.Nome_Leitor,
+		L.Titulo,
+        L.Edicao,
+        L.Ano_Publicacao,
+        L.ISBN,
+        Autor.Nome_Autor,
+        Editora.Nome_Editora,
+        Emprestimo.Data_Emprestimo,
+        Emprestimo.Data_Devolucao,
+        Emprestimo.Obs_Emprestimo,
+        Funcionario.Nome_Funcionario,
+        EmprestimoStatus.Nome_EmprestimoStatus,
+        Estado.Nome_Estado
+FROM Leitor as LE
+INNER JOIN Livro as L ON (Leitor.Id = L.Id_leitor)
+INNER JOIN Exemplar AS EX ON (L.Id = EX.Id_livro)
+INNER JOIN Autor AS A ON (L.Id_autor = A.Id)
+INNER JOIN Editora AS E ON (L.Id_editora = E.Id)
+INNER JOIN Genero AS G ON (G.Id = L.Id_genero)
+INNER JOIN Item_Emprestimo AS IT ON (EX.Id = IT.Id_exemplar)
+INNER JOIN Emprestimo AS EM ON (EM.Id = IT.Id_emprestimo)
+INNER JOIN Funcionario AS F ON (F.Id = EM.Id_funcionario)
+INNER JOIN LEITOR AS LE ON (LE.Id = EM.Id_leitor)
+INNER JOIN Status_Emprestimo AS SE ON (SE.Id = EM.Id_emprestimoStatus)
+INNER JOIN Estado AS EST ON (EST.Id = EM.Id_estado)
+ORDER BY LE.Nome_Leitor;
+
+SELECT	Funcionario.Nome_funcionario,
+		Funcao.Nome_funcao,
+		Estado.Nome_Estado as Estado_funcionario,
+		Livro.Titulo,
+        Livro.Edicao,
+        Livro.Ano_Publicacao,
+        Livro.ISBN,
+		Autor.Nome_autor,
+		Genero.Nome_Genero,
+        Autor.Nome_Autor,
+        Editora.Nome_Editora,
+		Leitor.Nome_leitor,
+        Emprestimo.Data_Emprestimo,
+        Emprestimo.Data_Devolucao,
+        Emprestimo.Obs_Emprestimo,
+        Status_Emprestimo.Nome_Status,
+        Estado.Nome_Estado as Estado_emprestimo
+FROM Funcionario
+INNER JOIN Emprestimo AS EM ON (Funcionario.Id = EM.Id_funcionario)
+INNER JOIN Funcao ON (funcao.Id = Funcionario.Id_funcao)
+INNER JOIN Estado ON (Funcionario.Id_estado = Estado.Id)
+INNER JOIN Emprestimo ON (Emprestimo.Id_estado = Estado.Id)
+INNER JOIN Status_Emprestimo ON (Emprestimo.Id_emprestimoStatus = Status_Emprestimo.Id)
+INNER JOIN Item_Emprestimo  ON (Item_Emprestimo.Id_emprestimo = Emprestimo.Id)
+INNER JOIN Exemplar  ON (Exemplar.Id = Item_Emprestimo.Id_exemplar)
+INNER JOIN Livro  ON (Livro.Id = Exemplar.Id_livro)
+INNER JOIN Genero  ON (Genero.Id = Livro.Id_genero)
+INNER JOIN Autor  ON (Autor.Id = Livro.Id_autor)
+INNER JOIN Editora  ON (Editora.Id = Livro.Id_editora)
+INNER JOIN Leitor  ON (leitor.Id = Emprestimo.Id_leitor)
+ORDER BY Funcionario.Nome_funcionario;
+
+
+SELECT COUNT(Id) AS 'Janeiro',
+       (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 1 AND YEAR(Data_Emprestimo) = 2022) AS 'Fevereiro',
+         (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 2 AND YEAR(Data_Emprestimo) = 2022) AS 'Março',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 3 AND YEAR(Data_Emprestimo) = 2022) AS 'Abril',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 4 AND YEAR(Data_Emprestimo) = 2022) AS 'Maio',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 5 AND YEAR(Data_Emprestimo) = 2022) AS 'Junho',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 6 AND YEAR(Data_Emprestimo) = 2022) AS 'Julho',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 7 AND YEAR(Data_Emprestimo) = 2022) AS 'Agosto',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 8 AND YEAR(Data_Emprestimo) = 2022) AS 'Setembro',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 9 AND YEAR(Data_Emprestimo) = 2022) AS 'Outubro',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 10 AND YEAR(Data_Emprestimo) = 2022) AS 'Novembro',
+            (SELECT COUNT(Id) FROM Emprestimo WHERE MONTH(Data_Emprestimo) = 11 AND YEAR(Data_Emprestimo) = 2022) AS 'Dezembro'
+            
+FROM Emprestimo 
+WHERE MONTH(Data_Emprestimo) = 0 AND YEAR(Data_Emprestimo) = 2022
+
+# Total emprestimo por funcionário
+
+SELECT Funcionario.Nome_funcionario,
+        COUNT(Emprestimo.Id) AS 'Total_emprestimos'
+FROM Funcionario
+LEFT JOIN Emprestimo ON (Funcionario.Id = Emprestimo.Id_funcionario)
+GROUP BY Funcionario.Nome_funcionario;
+
+
+INSERT INTO Item_Emprestimo (Id_exemplar, Id_emprestimo) VALUES (4, 7);
+
+# Quantidade de Emprestimos por leitor
+
+SELECT Leitor.Nome_leitor,
+        COUNT(Emprestimo.Id) AS 'Total_emprestimos'
+FROM Leitor
+LEFT JOIN Emprestimo ON (Leitor.Id = Emprestimo.Id_leitor)
+GROUP BY Leitor.Nome_leitor;
+
+# Quantidade de Emprestimos por exemplar
+
+SELECT Livro.Titulo,
+        COUNT(Emprestimo.Id) AS 'Total_emprestimos'
+FROM Exemplar
+INNER JOIN Livro ON (Livro.Id = Exemplar.Id_livro)
+INNER JOIN Item_Emprestimo ON (Item_Emprestimo.Id_exemplar = Exemplar.Id)
+LEFT JOIN Emprestimo ON (Item_Emprestimo.Id_emprestimo = Emprestimo.Id)
+GROUP BY Livro.Titulo;
+
+# Quantidade de Emprestimos por Gênero
+
+SELECT Genero.Nome_Genero,
+        COUNT(Emprestimo.Id) AS 'Total_emprestimos'
+FROM Genero
+LEFT JOIN Livro ON (Livro.Id_genero = Genero.Id)
+LEFT JOIN Exemplar ON (Exemplar.Id_livro = Livro.Id)
+LEFT JOIN Item_Emprestimo ON (Item_Emprestimo.Id_exemplar = Exemplar.Id)
+LEFT JOIN Emprestimo ON (Item_Emprestimo.Id_emprestimo = Emprestimo.Id)
+GROUP BY Genero.Nome_Genero;

@@ -21,19 +21,19 @@
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
 
     <!-- Styles -->
-    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
-    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="../../assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="../../assets/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="../../assets/css/lib/bootstrap.min.css" rel="stylesheet">
     
-    <link href="assets/css/lib/helper.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../../assets/css/lib/helper.css" rel="stylesheet">
+    <link href="../../assets/css/style.css" rel="stylesheet">
   </head>
 
   <body>
 
   <?php
-    require_once "Menu.php";
+    require_once "../../Util/Menu.php";
   ?>
 
 
@@ -216,13 +216,13 @@
       </form>
     </div>
     <!-- jquery vendor -->
-    <script src="assets/js/lib/jquery.min.js"></script>
-    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+    <script src="../../assets/js/lib/jquery.min.js"></script>
+    <script src="../../assets/js/lib/jquery.nanoscroller.min.js"></script>
     <!-- nano scroller -->
-    <script src="assets/js/lib/menubar/sidebar.js"></script>
-    <script src="assets/js/lib/preloader/pace.min.js"></script>
+    <script src="../../assets/js/lib/menubar/sidebar.js"></script>
+    <script src="../../assets/js/lib/preloader/pace.min.js"></script>
     <!-- sidebar -->
-    <script src="assets/js/lib/bootstrap.min.js">
+    <script src="../../assets/js/lib/bootstrap.min.js">
       
 
     </script>
@@ -231,11 +231,11 @@
 
     <!--  Chart js -->
     <!--  Chart js -->
-    <script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
-    <script src="assets/js/lib/chart-js/chartjs-init.js"></script>
+    <script src="../../assets/js/lib/chart-js/Chart.bundle.js"></script>
+    <script src="../../assets/js/lib/chart-js/chartjs-init.js"></script>
     <!-- // Chart js -->
     <!-- // Chart js -->
-    <script src="assets/js/lib/bootstrap.min.js"></script><script src="assets/js/scripts.js"></script>
+    <script src="../../assets/js/lib/bootstrap.min.js"></script><script src="../../assets/js/scripts.js"></script>
     <!-- scripit init-->
 
 
