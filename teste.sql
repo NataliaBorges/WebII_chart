@@ -40,6 +40,22 @@ CREATE TABLE Editora (
     Email VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE Leitor (
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    Nome_Leitor VARCHAR(255) NOT NULL,
+    Data_Nascimento DATE NOT NULL,
+    CPF VARCHAR(255) NOT NULL,
+    Telefone VARCHAR(255) NOT NULL,
+    Endereco VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Id_estado INT
+);
+
+CREATE TABLE Estado (
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    Nome_Estado VARCHAR(255) NOT NULL
+);
+
 SELECT Editora.Nome_Editora, Livro.Titulo, Livro.Edicao, Livro.Ano_Publicacao, Livro.ISBN, Genero.Nome_Genero, Autor.Nome_Autor
 COUNT(Exemplar.Id) AS Quantidade_Exemplares
 FROM Editora
@@ -65,6 +81,33 @@ INNER JOIN Livro ON (Genero.Id = Livro.Id_genero)
 INNER JOIN Autor ON (Livro.Id_autor = Autor.Id)
 INNER JOIN Editora ON (Livro.Id_editora = Editora.Id)
 
+SELECT  Autor.Nome_Autor, 
+                            Livro.Titulo, 
+                            Livro.Edicao, 
+                            Livro.Ano_Publicacao, 
+                            Livro.Data_Aquisicao, 
+                            Livro.ISBN, 
+                            Genero.Nome_Genero,
+                            COUNT(Exemplar.Id) AS Quantidade_Exemplares
+                            FROM Autor
+                    INNER JOIN Livro ON (Autor.Id = Livro.Id_autor)
+                    INNER JOIN Genero ON (Livro.Id_genero = Genero.Id)
+                    INNER JOIN Exemplar ON (Livro.Id = Exemplar.Id_livro)
+                    GROUP BY Autor.Nome_Autor, Livro.Titulo, Livro.Edicao, Livro.Ano_Publicacao, Livro.Data_Aquisicao, Livro.ISBN, Genero.Nome_Genero
+                    ORDER BY Autor.Nome_Autor;
 
 
 
+INSERT INTO Estado (Nome_Estado) VALUES ('Ativo');
+INSERT INTO Estado (Nome_Estado) VALUES ('Inativo');
+
+Delete FROM Estado WHERE Id = 3;
+
+UPDATE Estado SET Nome_Estado = 'Inativo' WHERE Id = 2;
+
+
+INSERT INTO Leitor (Nome_Leitor, Data_Nascimento, CPF, Telefone, Endereco, Email, Id_estado) 
+VALUES ('João', '01/01/2000', '123456789', '123456789', 'Rua 1', 'joao@gmail.com', 1);
+INSERT INTO Leitor (Nome_Leitor, Data_Nascimento, CPF, Telefone, Endereco, Email, Id_estado) VALUES 
+('Maria', '01/01/2000', '123456789', '123456789', 'Rua 1', 'maria@gmail.com', 1)
+Select * from Leitor;

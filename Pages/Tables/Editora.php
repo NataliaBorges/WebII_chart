@@ -3,15 +3,15 @@ require_once "../../Util/conexao.php";
 try{
     $Conexao    = Conexao::getConnection();
     $query      = $Conexao->query("
-                    SELECT  Editora.Nome_Editora, 
-                            Editora.Endereco,
-                            Editora.CNPJ,
-                            Editora.Email,
-                            COUNT(Exemplar.Id) AS Quantidade_Livros
-                FROM Editora
-                INNER JOIN Livro ON (Editora.Id = Livro.Id_editora)
-                INNER JOIN Exemplar ON (Livro.Id = Exemplar.Id_livro)
-                GROUP BY Editora.Nome_Editora, Editora.Endereco,Editora.CNPJ,Editora.Email
+                        SELECT  Editora.Nome_Editora, 
+                        Editora.Endereco,
+                        Editora.CNPJ,
+                        Editora.Email,
+                        COUNT(Exemplar.Id) AS Livros
+                    FROM Editora
+                    INNER JOIN Livro ON (Editora.Id = Livro.Id_editora)
+                    INNER JOIN Exemplar ON (Livro.Id = Exemplar.Id_livro)
+                    GROUP BY Editora.Nome_Editora, Editora.Endereco,Editora.CNPJ,Editora.Email
     ");
     $editoras   = $query->fetchAll();
     $query2      = $Conexao->query("
@@ -34,6 +34,7 @@ try{
     exit;
  }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +43,7 @@ try{
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dark Read</title>
+    <title>Relatório: editora</title>
 
     <!-- ================= Favicon ================== -->
     <!-- Standard -->
@@ -66,87 +67,97 @@ try{
     <link href="/assets/css/lib/data-table/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/lib/data-table/simple.css" rel="stylesheet">
 </head>
-<style>
-    table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
-    background-repeat: no-repeat;
-}
-</style>
 <body>
-    <?php
-        require_once "../../Util/Menu.php";
-    ?>
+
+        <?php
+            require_once "../../Util/Menu.php";
+        ?>
+        <!-- /# sidebar -->
+
 
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
+                <!-- /# row -->
                 <section id="main-content">
                     <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Editora e Quantidade de Obras</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="min-width: 845px">
-                                        <thead>
-                                            <tr>
-                                                <th>Editora</th>
-                                                <th>Endereço</th>
-                                                <th>CNPJ</th>
-                                                <th>Email</th>
-                                                <th>Qtd. de Exemplares</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Editora e Quantidade de Títulos</h4>
+                                </div>
+                                <div class= "buttonsDiv" id="buttonsDiv"></div>
+                                <div class="bootstrap-data-table-panel">
+                                    <div class="table-responsive" style="overflow-x: hidden;">
+                                        <table id="row-select" class="display table table-borderd table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Editora</th>
+                                                    <th>Endereço</th>
+                                                    <th>CNPJ</th>
+                                                    <th>Email</th>
+                                                    <th>Qtd. de Títulos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
                                             foreach($editoras as $editora) {
-                                        ?>
-                                            <tr>
-                                                <td style="padding-left: 18px !important;"><?php echo $editora['Nome_Editora']; ?></td>
-                                                <td><?php echo $editora['Endereco']; ?></td>
-                                                <td><?php echo $editora['CNPJ']; ?></td>
-                                                <td><?php echo $editora['Email']; ?></td>
-                                                <td style="padding-left: 80px !important;"><?php echo $editora['Quantidade_Livros']; ?></td>
-                                            </tr>
-                                        <?php
+                                            ?>
+                                                <tr>
+                                                    <td style="padding-left: 18px !important;"><?php echo $editora['Nome_Editora']; ?></td>
+                                                    <td><?php echo $editora['Endereco']; ?></td>
+                                                    <td><?php echo $editora['CNPJ']; ?></td>
+                                                    <td><?php echo $editora['Email']; ?></td>
+                                                    <td style="padding-left: 20px !important;"><?php echo $editora['Livros']; ?></td>
+                                                </tr>
+                                            <?php
                                             }
-                                        ?>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Editora</th>
-                                                <th>Endereço</th>
-                                                <th>CNPJ</th>
-                                                <th>Email</th>
-                                                <th>Qtd. de Exemplares</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            ?>
+                                            </tbody>
+                                            <thead>
+                                                <tr>
+                                                    <th>Editora</th>
+                                                    <th>Endereço</th>
+                                                    <th>CNPJ</th>
+                                                    <th>Email</th>
+                                                    <th>Qtd. de Títulos</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Editora</th>
+                                                    <th>Endereço</th>
+                                                    <th>CNPJ</th>
+                                                    <th>Email</th>
+                                                    <th>Qtd. de Títulos</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- /# card -->
                         </div>
-                        
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Editora e suas Obras</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="Autor" class="display" style="min-width: 845px">
+                        <!-- /# column -->
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Editora e Títulos</h4>
+                                </div>
+                                <div class="buttonsDiv" id="buttonsDiv2"></div>
+                                <div class="bootstrap-data-table-panel">
+                                    <div class="table-responsive">
+                                        <table id="row-select1" class="display table table-borderd table-hover">
                                         <thead>
                                             <tr>
                                                 <th>Editora</th>
-                                                <th>Obra</th>
+                                                <th>Título</th>
                                                 <th>Edição</th>
                                                 <th>Publicação</th>
                                                 <th>Aquisição</th>
                                                 <th>ISBN</th>
                                                 <th>Autor</th>
                                                 <th>Gênero</th>
-                                            
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -168,10 +179,22 @@ try{
                                             }
                                         ?>
                                         </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>Editora</th>
+                                                <th>Título</th>
+                                                <th>Edição</th>
+                                                <th>Publicação</th>
+                                                <th>Aquisição</th>
+                                                <th>ISBN</th>
+                                                <th>Autor</th>
+                                                <th>Gênero</th>
+                                            </tr>
+                                        </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>Editora</th>
-                                                <th>Obra</th>
+                                                <th>Título</th>
                                                 <th>Edição</th>
                                                 <th>Publicação</th>
                                                 <th>Aquisição</th>
@@ -180,13 +203,12 @@ try{
                                                 <th>Gênero</th>
                                             </tr>
                                         </tfoot>
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- /# card -->
                         </div>
-                        
-                    </div>
-                        <!-- /# column -->
                     </div>
                     <!-- /# row -->
 
@@ -197,6 +219,7 @@ try{
             </div>
         </div>
     </div>
+
     
     <!-- jquery vendor -->
     <script src="/assets/js/lib/jquery.min.js"></script>
@@ -207,15 +230,19 @@ try{
     <!-- sidebar -->
     
     <!-- bootstrap -->
+
     <script src="/assets/js/lib/bootstrap.min.js"></script><script src="/assets/js/scripts.js"></script>
     <!-- scripit init-->
+    <script src="/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="/assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="/assets/js/lib/data-table/pdfmake.min.js"></script>
+    <script src="/assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="/assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="/assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="/assets/js/lib/data-table/datatables-init.js"></script>
 
-    <!-- Datatable -->
-    <script src="/assets/js/lib/data-table/global.min.js"></script>
-    <script src="/assets/js/lib/data-table/quixnav-init.js"></script>
-    <script src="/assets/js/lib/data-table/custom.min.js"></script>
-    <script src="/assets/js/lib/data-table/jquery.dataTables2.min.js"></script>
-    <script src="/assets/js/lib/data-table/datatables.init.js"></script>
 </body>
 
 </html>

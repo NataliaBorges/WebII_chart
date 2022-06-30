@@ -3,21 +3,21 @@ require_once "../../Util/conexao.php";
 try{
     $Conexao    = Conexao::getConnection();
     $query      = $Conexao->query("
-        SELECT  L.Titulo,
-                L.Edicao,
-                L.Ano_Publicacao,
-                L.Data_Aquisicao,
-                L.ISBN,
-                G.Nome_Genero,
-                A.Nome_Autor,
-                ED.Nome_Editora,
-                COUNT(E.Id) AS Exemplares
-        FROM Exemplar AS E
-        INNER JOIN Livro AS L ON (L.Id = E.Id_livro)
-        INNER JOIN Genero AS G ON (L.Id_genero = G.Id)
-        INNER JOIN Autor AS A ON (L.Id_autor = A.Id)
-        INNER JOIN Editora AS ED ON (L.Id_editora = ED.Id)
-        GROUP BY L.TItulo, L.Edicao, L.Ano_Publicacao, L.Data_Aquisicao, L.ISBN, G.Nome_Genero, A.Nome_Autor, ED.Nome_Editora;
+                                    SELECT	L.Titulo,
+                                            L.Edicao,
+                                            L.Ano_Publicacao,
+                                            L.Data_Aquisicao,
+                                            L.ISBN,
+                                            G.Nome_Genero,
+                                            A.Nome_Autor,
+                                            ED.Nome_Editora,
+                                            COUNT(E.Id) AS Exemplares
+                                    FROM Livro AS L
+                                    Left JOIN Exemplar AS E ON (L.Id = E.Id_livro)
+                                    INNER JOIN Genero AS G ON (L.Id_genero = G.Id)
+                                    INNER JOIN Autor AS A ON (L.Id_autor = A.Id)
+                                    INNER JOIN Editora AS ED ON (L.Id_editora = ED.Id)
+                                    GROUP BY L.TItulo, L.Edicao, L.Ano_Publicacao, L.Data_Aquisicao, L.ISBN, G.Nome_Genero, A.Nome_Autor, ED.Nome_Editora;
     ");
     $livros   = $query->fetchAll();
  }catch(Exception $e){
@@ -25,6 +25,7 @@ try{
     exit;
  }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +34,7 @@ try{
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dark Read</title>
+    <title>Relatório: Livro</title>
 
     <!-- ================= Favicon ================== -->
     <!-- Standard -->
@@ -57,75 +58,93 @@ try{
     <link href="/assets/css/lib/data-table/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/lib/data-table/simple.css" rel="stylesheet">
 </head>
-
 <body>
-    <?php
-        require_once "../../Util/Menu.php";
-    ?>
+
+        <?php
+            require_once "../../Util/Menu.php";
+        ?>
+        <!-- /# sidebar -->
+
 
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
+                <!-- /# row -->
                 <section id="main-content">
                     <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Relatório de Livros</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="min-width: 845px">
-                                        <thead>
-                                            <tr>
-                                                <th>Título</th>
-                                                <th>Edição</th>
-                                                <th>Publicação</th>
-                                                <th>Aquisição</th>
-                                                <th>ISBN</th>
-                                                <th>Gênero</th>
-                                                <th>Autor</th>
-                                                <th>Editora</th>
-                                                <th>Qtd. de Exemplares</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                            foreach($livros as $livro) {
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $livro['Titulo']; ?></td>
-                                                <td><?php echo $livro['Edicao']; ?></td>
-                                                <td><?php echo $livro['Ano_Publicacao']; ?></td>
-                                                <td><?php echo date('d/m/Y',  strtotime($livro['Data_Aquisicao'])); ?></td>
-                                                <td><?php echo $livro['ISBN']; ?></td>
-                                                <td><?php echo $livro['Nome_Genero']; ?></td>
-                                                <td><?php echo $livro['Nome_Autor']; ?></td>
-                                                <td><?php echo $livro['Nome_Editora']; ?></td>
-                                                <td><?php echo $livro['Exemplares']; ?></td>
-                                            </tr>
-                                        <?php
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Livros e Quantidade de Exemplares</h4>
+                                </div>
+                                <div class="buttonsDiv" id="buttonsDiv"></div>
+                                <div class="bootstrap-data-table-panel">
+                                    <div class="table-responsive">
+                                        <table id="row-select" class="display table table-borderd table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Livro</th>
+                                                    <th>Edição</th>
+                                                    <th>Publicação</th>
+                                                    <th>Aquisição</th>
+                                                    <th>ISBN</th>
+                                                    <th>Gênero</th>
+                                                    <th>Autor</th>
+                                                    <th>Editora</th>
+                                                    <th>Exemplares</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            foreach($livros  as $livro) {
+                                            ?>
+                                                <tr>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Titulo']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Edicao']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Ano_Publicacao']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime($livro['Data_Aquisicao'])); ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['ISBN']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Nome_Genero']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Nome_Autor']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Nome_Editora']; ?></td>
+                                                    <td style="padding-left: 18px !important;"><?php echo $livro['Exemplares']; ?></td>
+                                                </tr>
+                                            <?php
                                             }
-                                        ?>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Título</th>
-                                                <th>Edição</th>
-                                                <th>Publicação</th>
-                                                <th>Aquisição</th>
-                                                <th>ISBN</th>
-                                                <th>Gênero</th>
-                                                <th>Autor</th>
-                                                <th>Editora</th>
-                                                <th>Qtd. de Exemplares</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            ?>
+                                            </tbody>
+                                            <thead>
+                                                <tr>
+                                                    <th>Livro</th>
+                                                    <th>Edição</th>
+                                                    <th>Publicação</th>
+                                                    <th>Aquisição</th>
+                                                    <th>ISBN</th>
+                                                    <th>Gênero</th>
+                                                    <th>Autor</th>
+                                                    <th>Editora</th>
+                                                    <th>Exemplares</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Livro</th>
+                                                    <th>Edição</th>
+                                                    <th>Publicação</th>
+                                                    <th>Aquisição</th>
+                                                    <th>ISBN</th>
+                                                    <th>Gênero</th>
+                                                    <th>Autor</th>
+                                                    <th>Editora</th>
+                                                    <th>Exemplares</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- /# card -->
                         </div>
-                    </div>
                         <!-- /# column -->
                     </div>
                     <!-- /# row -->
@@ -138,6 +157,10 @@ try{
         </div>
     </div>
     
+
+
+
+    
     <!-- jquery vendor -->
     <script src="/assets/js/lib/jquery.min.js"></script>
     <script src="/assets/js/lib/jquery.nanoscroller.min.js"></script>
@@ -147,15 +170,19 @@ try{
     <!-- sidebar -->
     
     <!-- bootstrap -->
+
     <script src="/assets/js/lib/bootstrap.min.js"></script><script src="/assets/js/scripts.js"></script>
     <!-- scripit init-->
+    <script src="/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="/assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="/assets/js/lib/data-table/pdfmake.min.js"></script>
+    <script src="/assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="/assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="/assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="/assets/js/lib/data-table/datatables-init.js"></script>
 
-    <!-- Datatable -->
-    <script src="/assets/js/lib/data-table/global.min.js"></script>
-    <script src="/assets/js/lib/data-table/quixnav-init.js"></script>
-    <script src="/assets/js/lib/data-table/custom.min.js"></script>
-    <script src="/assets/js/lib/data-table/jquery.dataTables2.min.js"></script>
-    <script src="/assets/js/lib/data-table/datatables.init.js"></script>
 </body>
 
 </html>
