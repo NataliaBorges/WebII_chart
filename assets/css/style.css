@@ -81,7 +81,7 @@
 .card {
   background: #ffffff;
   margin: 7.5px 0;
-  padding: 20px;
+  padding-bottom: 50px;
   border: 1px solid #e7e7e7;
   border-radius: 3px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -3665,7 +3665,6 @@ tbody tr td:last-child {
   fill: #e6a1f2;
 }
 body {
-  font-family: 'Roboto', sans-serif;
   background: rgba(88, 115, 254, 0.04);
   color: #868e96;
   font-size: 14px;

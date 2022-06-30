@@ -5,9 +5,9 @@
           <ul>
             <li><a  href="/index.php"><i class="ti-home"></i> Home <span class="badge badge-primary"></span> </a>
             </li>
-            <li><a href="/Pages/Chats/chart-flot.php"><i class="ti-bar-chart-alt"></i>  Gráficos  <span class="sidebar-collapse-icon"></span></a></li>
+            <li><a href="/Pages/Chats/Graficos.php"><i class="ti-bar-chart-alt"></i>  Gráficos  <span class="sidebar-collapse-icon"></span></a></li>
             <li><a class="sidebar-sub-toggle"><i class="ti-view-list-alt"></i> Relatório <span class="sidebar-collapse-icon ti-angle-down"></span></a>
-              <ul>
+            <ul>
                 <li><a href="/Pages/Tables/Livros.php">Livros</a></li>
                 <li><a href="/Pages/Tables/Autor.php">Autor</a></li>
                 <li><a href="/Pages/Tables/Editora.php">Editora</a></li>

@@ -124,7 +124,7 @@ require_once "../../Util/Menu.php";
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-title">
-                  <h4>Livro emprestado qtd de vezes</h4>
+                  <h4>Livros e Qtd. de Empréstimos</h4>
                 </div>
                 <div class="flot-container">
                 <div class="ct-bar-chart"></div>
@@ -139,8 +139,7 @@ require_once "../../Util/Menu.php";
           <div class="row">
             <div class="col-lg-12">
               <div class="footer">
-                <p>2018 © Admin Board. -
-                  <a href="#">example.com</a>
+                <p>2022 © DARK READ
                 </p>
               </div>
             </div>
