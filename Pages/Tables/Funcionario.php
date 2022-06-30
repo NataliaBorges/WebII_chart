@@ -3,21 +3,23 @@ require_once "../../Util/conexao.php";
 try{
     $Conexao    = Conexao::getConnection();
     $query      = $Conexao->query("
-                                    SELECT  Leitor.Nome_Leitor,
-                                            Leitor.Data_Nascimento,
-                                            Leitor.CPF,
-                                            Leitor.Telefone,
-                                            Leitor.Endereco,
-                                            Leitor.Email,
-                                            Estado.Nome_Estado,
-                                            (SELECT Data_Devolucao FROM Emprestimo WHERE Id_leitor = Leitor.Id ORDER BY Id DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY) As Emprestimo,
-                                            (SELECT COUNT(Emprestimo.Id) From Emprestimo WHERE Emprestimo.Id_leitor = Leitor.Id) AS Quantidade_Emprestimo
-                                    FROM Leitor 
-                                    INNER JOIN Estado ON Leitor.Id_estado = Estado.Id
-                                    GROUP BY Leitor.Id, Leitor.Nome_Leitor, Leitor.Data_Nascimento, Leitor.CPF, Leitor.Telefone, Leitor.Endereco, Leitor.Email, Estado.Nome_Estado
-                                    ORDER BY Leitor.Nome_Leitor;
-");
-$Leitores   = $query->fetchAll();
+                                    SELECT	FUNCIONARIO.Nome_Funcionario,
+                                            FUNCIONARIO.Data_Nascimento,
+                                            FUNCIONARIO.CPF,
+                                            FUNCIONARIO.Endereco,
+                                            FUNCIONARIO.Telefone,
+                                            FUNCIONARIO.Email,
+                                            FUNCAO.Nome_Funcao,
+                                            ESTADO.Nome_Estado,
+                                            (SELECT COUNT(Emprestimo.Id) From Emprestimo WHERE Emprestimo.Id_funcionario = Funcionario.Id) AS Quantidade_Emprestimo
+                                    FROM FUNCIONARIO
+                                    INNER JOIN FUNCAO ON FUNCIONARIO.Id_funcao = FUNCAO.Id
+                                    INNER JOIN ESTADO ON FUNCIONARIO.Id_estado = ESTADO.Id
+                                    LEFT JOIN EMPRESTIMO ON FUNCIONARIO.Id = EMPRESTIMO.Id_funcionario
+                                    GROUP BY FUNCIONARIO.Nome_Funcionario, FUNCIONARIO.Data_Nascimento, FUNCIONARIO.CPF, FUNCIONARIO.Endereco, FUNCIONARIO.Telefone, FUNCIONARIO.Email, FUNCAO.Nome_Funcao, ESTADO.Nome_Estado, Funcionario.Id
+                                    ORDER BY FUNCIONARIO.Nome_Funcionario;
+    ");
+$funcionarios   = $query->fetchAll();
  }catch(Exception $e){
     echo $e->getMessage();
     exit;
@@ -73,7 +75,7 @@ $Leitores   = $query->fetchAll();
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-title">
-                                    <h4>Leitor e Empréstimos</h4>
+                                    <h4>Funcionários e Empréstimos</h4>
                                 </div>
                                 <div class="buttonsDiv" id="buttonsDiv"></div>
                                 <div class="bootstrap-data-table-panel">
@@ -84,28 +86,28 @@ $Leitores   = $query->fetchAll();
                                                 <th>Nome</th>
                                                 <th>Nascimento</th>
                                                 <th>CPF</th>
-                                                <th>Telefone</th>
                                                 <th>Endereço</th>
+                                                <th>Telefone</th>
                                                 <th>Email</th>
+                                                <th>Função</th>
                                                 <th>Estado</th>
-                                                <th>Último Empréstimo</th>
                                                 <th>Empréstimos</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                            foreach($Leitores as $Leitor) {
+                                            foreach($funcionarios as $funcionario) {
                                         ?>
                                             <tr>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['Nome_Leitor']; ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime($Leitor['Data_Nascimento'])); ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['CPF']; ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['Telefone']; ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['Endereco']; ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['Email']; ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['Nome_Estado']; ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo !$Leitor['Emprestimo']?"N/A":date('d/m/Y',  strtotime( $Leitor['Emprestimo'])); ?></td>
-                                                <td style="padding-left: 18px !important;"><?php echo $Leitor['Quantidade_Emprestimo']; ?></td>
+                                                <td><?php echo $funcionario['Nome_Funcionario']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo date('d/m/Y',  strtotime($funcionario['Data_Nascimento'])); ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['CPF']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['Endereco']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['Telefone']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['Email']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['Nome_Funcao']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['Nome_Estado']; ?></td>
+                                                <td style="padding-left: 18px !important;"><?php echo $funcionario['Quantidade_Emprestimo']; ?></td>
                                             </tr>
                                         <?php
                                             }
@@ -116,24 +118,24 @@ $Leitores   = $query->fetchAll();
                                                 <th>Nome</th>
                                                 <th>Nascimento</th>
                                                 <th>CPF</th>
-                                                <th>Telefone</th>
                                                 <th>Endereço</th>
+                                                <th>Telefone</th>
                                                 <th>Email</th>
+                                                <th>Função</th>
                                                 <th>Estado</th>
-                                                <th>Último Empréstimo</th>
                                                 <th>Empréstimos</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Nome</th>
+                                            <th>Nome</th>
                                                 <th>Nascimento</th>
                                                 <th>CPF</th>
-                                                <th>Telefone</th>
                                                 <th>Endereço</th>
+                                                <th>Telefone</th>
                                                 <th>Email</th>
+                                                <th>Função</th>
                                                 <th>Estado</th>
-                                                <th>Último Empréstimo</th>
                                                 <th>Empréstimos</th>
                                             </tr>
                                         </tfoot>
